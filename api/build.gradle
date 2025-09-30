@@ -3,9 +3,19 @@ plugins {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
 }
+
 
 springBoot {
     mainClass = 'com.reliaquest.api.ApiApplication'
 }
+
+tasks.withType(Test).configureEach { useJUnitPlatform() }
