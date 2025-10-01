@@ -4,13 +4,12 @@ import com.reliaquest.api.dto.Employee;
 import com.reliaquest.api.dto.EmployeeCreateRequest;
 import com.reliaquest.api.service.EmployeeService;
 import jakarta.validation.Valid;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -37,7 +36,7 @@ public class EmployeeController {
         return service.getEmployeesByNameSearch(searchString);
     }
 
-    // 👇 Add this
+    // GET /api/v1/employees/highestSalary
     @GetMapping(value = "/employees/highestSalary", produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer getHighestSalaryOfEmployees() {
         log.info("HIT highestSalary");
@@ -52,7 +51,7 @@ public class EmployeeController {
         return service.getTop10HighestEarningEmployeeNames();
     }
 
-    // GET /api/v1/employees/{id}  (UUID-only so it won't match the static paths above)
+    // GET /api/v1/employees/{id}
     @GetMapping(value = "/employees/{id:[0-9a-fA-F\\-]{36}}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable String id) {
         log.info("HIT getEmployeeById id={}", id);
@@ -60,24 +59,16 @@ public class EmployeeController {
     }
 
     // POST /api/v1/employees
-    @PostMapping(
-            value = "/employees",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee createEmployee(@Valid @RequestBody EmployeeCreateRequest input) {
-        log.info(
-                "HIT createEmployee name={}, salary={}, age={}, title={}",
-                input.name(),
-                input.salary(),
-                input.age(),
-                input.title());
+        log.info("HIT createEmployee name={}, salary={}, age={}, title={}", input.name(), input.salary(), input.age(), input.title());
         return service.createEmployee(input);
     }
 
-    // DELETE /api/v1/employees/{id} (you can keep this ready)
-    @DeleteMapping(value = "/employees/{id:[0-9a-fA-F\\-]{36}}", produces = MediaType.TEXT_PLAIN_VALUE)
+    // DELETE /api/v1/employees/{id}
+    @DeleteMapping(value = "/employees/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public String deleteEmployeeById(@PathVariable String id) {
         log.info("HIT deleteEmployeeById id={}", id);
-        return service.deleteEmployeeById(id); // returns the employee's NAME (plain text)
+        return service.deleteEmployeeById(id);
     }
 }
