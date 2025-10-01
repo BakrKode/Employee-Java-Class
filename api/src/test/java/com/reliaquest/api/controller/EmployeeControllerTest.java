@@ -13,12 +13,9 @@ import com.reliaquest.api.dto.EmployeeCreateRequest;
 import com.reliaquest.api.service.EmployeeService;
 import java.util.List;
 import java.util.UUID;
-
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -139,7 +136,6 @@ class EmployeeControllerTest {
 
         // Additional Assertions
         Mockito.verify(employeeService, Mockito.times(1)).getEmployeeById(eq(id));
-
     }
 
     @Test
@@ -147,11 +143,11 @@ class EmployeeControllerTest {
     void getById_notFound() throws Exception {
         // ARRANGE
         String id = UUID.randomUUID().toString();
-        Mockito.when(employeeService.getEmployeeById(eq(id))).thenThrow(new ResponseStatusException(NOT_FOUND, "not found"));
+        Mockito.when(employeeService.getEmployeeById(eq(id)))
+                .thenThrow(new ResponseStatusException(NOT_FOUND, "not found"));
 
         // ACT
-        mvc.perform(get("/api/v1/employees/{id}", id))
-                .andExpect(status().isNotFound());
+        mvc.perform(get("/api/v1/employees/{id}", id)).andExpect(status().isNotFound());
 
         // ASSERT
         Mockito.verify(employeeService, Mockito.times(1)).getEmployeeById(eq(id));
@@ -179,8 +175,6 @@ class EmployeeControllerTest {
         assertEquals("Software Engineer", captured.title());
     }
 
-
-
     // ----------------- DELETE /employees/{id} -----------------
     @Test
     @DisplayName("DELETE /api/v1/employees/{id} -> 200 + name (text/plain)")
@@ -197,7 +191,6 @@ class EmployeeControllerTest {
 
         // ASSERT
         Mockito.verify(employeeService, Mockito.times(1)).deleteEmployeeById(eq(id));
-
     }
 
     @Test
@@ -205,7 +198,8 @@ class EmployeeControllerTest {
     void delete_notFound() throws Exception {
         // ARRANGE
         String id = UUID.randomUUID().toString();
-        Mockito.when(employeeService.deleteEmployeeById(eq(id))).thenThrow(new ResponseStatusException(NOT_FOUND, "not found"));
+        Mockito.when(employeeService.deleteEmployeeById(eq(id)))
+                .thenThrow(new ResponseStatusException(NOT_FOUND, "not found"));
 
         // ACT
         mvc.perform(delete("/api/v1/employees/{id}", id)).andExpect(status().isNotFound());

@@ -1,5 +1,35 @@
 # ReliaQuest Coding Challenge
 
+## Solution Validation via Postman:
+
+GET getAllEmployees()
+<img width="858" height="685" alt="image" src="https://github.com/user-attachments/assets/06fbfac1-865d-4036-8ee0-809025775d8b" />
+
+GET getEmployeesByNameSearch()
+<img width="848" height="586" alt="image" src="https://github.com/user-attachments/assets/728502a9-eaa8-4dd9-8d88-19f13a998577" />
+
+GET getHighestSalaryOfEmployees()
+<img width="855" height="512" alt="image" src="https://github.com/user-attachments/assets/2152cc3b-81d2-4651-87fc-741ea3666522" />
+
+GET topTenHighestEarningEmployeeNames()
+<img width="847" height="571" alt="image" src="https://github.com/user-attachments/assets/5b920fa4-19b0-4607-a9bf-3abad48e75d7" />
+
+GET getEmployeeById()
+<img width="861" height="502" alt="image" src="https://github.com/user-attachments/assets/98be5de4-3ace-4ddf-8864-9bcddc6d8243" />
+
+POST createEmployee()
+- Create
+  
+<img width="851" height="566" alt="image" src="https://github.com/user-attachments/assets/0e2cedbc-b94a-4280-9c48-347aab200c02" />
+
+- Search via ID Recently Created Employee
+  
+<img width="860" height="596" alt="image" src="https://github.com/user-attachments/assets/b09beaf7-1fdb-40aa-8f94-3d11db5a1d81" />
+
+DELETE employeeById()
+<img width="854" height="450" alt="image" src="https://github.com/user-attachments/assets/23b4e122-6f2f-4f74-8cf0-fdf3f44afe1f" />
+
+
 #### In this assessment you will be tasked with filling out the functionality of different methods that will be listed further down.
 
 These methods will require some level of API interactions with Mock Employee API at http://localhost:8112/api/v1/employee.

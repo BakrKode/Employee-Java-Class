@@ -58,8 +58,7 @@ class EmployeeServiceImplTest {
         // ARRANGE
         var e1 = emp("Alice", 120_000);
         var e2 = emp("Bob", 90_000);
-        given(employeeClient.getAll())
-                .willReturn(listResp(List.of(e1, e2)));
+        given(employeeClient.getAll()).willReturn(listResp(List.of(e1, e2)));
 
         // ACT
         var result = employeeService.getAllEmployees();
