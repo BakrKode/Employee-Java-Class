@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -75,15 +74,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         var all = getAllEmployees();
         log.debug("Highest salary base size={}", all.size());
 
-        int max = all.stream()
-                .mapToInt(Employee::employeeSalary)
-                .max()
-                .orElse(0);
+        int max = all.stream().mapToInt(Employee::employeeSalary).max().orElse(0);
 
         log.info("Highest salary = {}", max);
         return max;
     }
-
 
     @Override
     public List<String> getTop10HighestEarningEmployeeNames() {
@@ -129,12 +124,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!ok) {
             // treat as not-found rather than 500
             throw new org.springframework.web.server.ResponseStatusException(
-                    org.springframework.http.HttpStatus.NOT_FOUND,
-                    "Employee not found when deleting by name: " + name);
+                    org.springframework.http.HttpStatus.NOT_FOUND, "Employee not found when deleting by name: " + name);
         }
 
         log.info("Service: deleted '{}'(id={})", name, id);
         return name;
     }
-
 }

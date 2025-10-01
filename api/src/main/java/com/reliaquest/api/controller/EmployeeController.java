@@ -5,8 +5,6 @@ import com.reliaquest.api.dto.EmployeeCreateRequest;
 import com.reliaquest.api.service.EmployeeService;
 import jakarta.validation.Valid;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -17,46 +15,45 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
 
     private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
-    private final EmployeeService service;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService service) {
-        this.service = service;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     // GET /api/v1/employees
     @GetMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees() {
         log.info("HIT getAllEmployees");
-        return service.getAllEmployees();
+        return employeeService.getAllEmployees();
     }
 
     // GET /api/v1/employees/search/{searchString}
     @GetMapping(value = "/employees/search/{searchString}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByNameSearch(@PathVariable String searchString) {
         log.info("HIT getEmployeesByNameSearch searchString={}", searchString);
-        return service.getEmployeesByNameSearch(searchString);
+        return employeeService.getEmployeesByNameSearch(searchString);
     }
 
-    // 👇 Add this
+    // GET /api/v1/employees/highestSalary
     @GetMapping(value = "/employees/highestSalary", produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer getHighestSalaryOfEmployees() {
         log.info("HIT highestSalary");
-        return service.getHighestSalaryOfEmployees();
+        return employeeService.getHighestSalaryOfEmployees();
     }
-
 
     // GET /api/v1/employees/topTenHighestEarningEmployeeNames
     @GetMapping(value = "/employees/topTenHighestEarningEmployeeNames", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getTop10HighestEarningEmployeeNames() {
         log.info("HIT getTop10HighestEarningEmployeeNames");
-        return service.getTop10HighestEarningEmployeeNames();
+        return employeeService.getTop10HighestEarningEmployeeNames();
     }
 
-    // GET /api/v1/employees/{id}  (UUID-only so it won't match the static paths above)
+    // GET /api/v1/employees/{id}
     @GetMapping(value = "/employees/{id:[0-9a-fA-F\\-]{36}}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable String id) {
         log.info("HIT getEmployeeById id={}", id);
-        return service.getEmployeeById(id);
+        return employeeService.getEmployeeById(id);
     }
 
     // POST /api/v1/employees
@@ -71,13 +68,13 @@ public class EmployeeController {
                 input.salary(),
                 input.age(),
                 input.title());
-        return service.createEmployee(input);
+        return employeeService.createEmployee(input);
     }
 
-    // DELETE /api/v1/employees/{id} (you can keep this ready)
-    @DeleteMapping(value = "/employees/{id:[0-9a-fA-F\\-]{36}}", produces = MediaType.TEXT_PLAIN_VALUE)
+    // DELETE /api/v1/employees/{id}
+    @DeleteMapping(value = "/employees/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public String deleteEmployeeById(@PathVariable String id) {
         log.info("HIT deleteEmployeeById id={}", id);
-        return service.deleteEmployeeById(id); // returns the employee's NAME (plain text)
+        return employeeService.deleteEmployeeById(id);
     }
 }

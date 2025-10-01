@@ -9,5 +9,4 @@ import jakarta.validation.constraints.Positive;
  * Request body for POST /employee on the mock API.
  */
 public record EmployeeCreateRequest(
-        @NotBlank String name, @Positive int salary, @Min(16) @Max(75) int age, @NotBlank String title) {
-}
+        @NotBlank String name, @Positive int salary, @Min(16) @Max(75) int age, @NotBlank String title) {}
